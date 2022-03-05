@@ -74,9 +74,11 @@ class _FormWidgetState extends State<_FormWidget> {
       fontSize: 16,
       color: Color(0xFF212529),
     );
+    const colorFont = const Color(0xFF01B4E4);
     const textFieldDecorator = const InputDecoration(
       border: OutlineInputBorder(),
-      contentPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      isCollapsed: true,
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,13 +87,33 @@ class _FormWidgetState extends State<_FormWidget> {
           'Username',
           style: textStyle,
         ),
-        const TextField(
-            decoration: textFieldDecorator),
+        const SizedBox(height: 5),
+        const TextField(decoration: textFieldDecorator),
+        const SizedBox(height: 20),
         const Text(
           'Password',
           style: textStyle,
         ),
-        const TextField(decoration: textFieldDecorator),
+        const SizedBox(height: 5),
+        const TextField(
+          decoration: textFieldDecorator,
+          obscureText: true,
+        ),
+        Row(
+          children: [
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(colorFont),
+              ),
+              child: const Text('Login'),
+              onPressed: () {},
+            ),
+            TextButton(
+              child: const Text('Reset password'),
+              onPressed: () {},
+            ),
+          ],
+        )
       ],
     );
   }
