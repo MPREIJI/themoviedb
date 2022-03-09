@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb/Theme/app_button_style.dart';
 
 class AuthWidget extends StatefulWidget {
   const AuthWidget({Key? key}) : super(key: key);
@@ -59,12 +60,11 @@ class _HeaderWidgetState extends State<_HeaderWidget> {
             'отправить письмо повторно.',
             style: textStyle,
           ),
-          const SizedBox(height: 25),
           const SizedBox(height: 5),
           TextButton(
             style: AppButtonStyle.linkButton,
             onPressed: () {},
-            child: Text('Verify email'),
+            child: const Text('Подтвердить email'),
           ),
         ],
       ),
@@ -131,7 +131,7 @@ class _FormWidgetState extends State<_FormWidget> {
           style: textStyle,
         ),
         const SizedBox(height: 5),
-        const TextField(
+        TextField(
           controller: _loginTextController,
           decoration: textFieldDecorator,
         ),
@@ -141,14 +141,15 @@ class _FormWidgetState extends State<_FormWidget> {
           style: textStyle,
         ),
         const SizedBox(height: 5),
-        const TextField(
+        TextField(
           controller: _passwordTextController,
           decoration: textFieldDecorator,
           obscureText: true,
         ),
+        const SizedBox(height: 25),
         Row(
           children: [
-            TextButton(
+            ElevatedButton(
               onPressed: _auth,
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(colorFont),
