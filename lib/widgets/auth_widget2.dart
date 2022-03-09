@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb/Theme/app_button_style.dart';
 
 class AuthWidget extends StatefulWidget {
-  const AuthWidget({Key? key}) : super(key: key);
+  AuthWidget({Key? key}) : super(key: key);
 
   @override
   _AuthWidgetState createState() => _AuthWidgetState();
@@ -12,55 +13,50 @@ class _AuthWidgetState extends State<AuthWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login to your account'),
+        title: Text('Login to your account'),
       ),
       body: ListView(
-        children: [const _HeaderWidget()],
+        children: [
+          _HeaderWidget(),
+        ],
       ),
     );
   }
 }
 
-class _HeaderWidget extends StatefulWidget {
+class _HeaderWidget extends StatelessWidget {
   const _HeaderWidget({Key? key}) : super(key: key);
 
   @override
-  _HeaderWidgetState createState() => _HeaderWidgetState();
-}
-
-class _HeaderWidgetState extends State<_HeaderWidget> {
-  @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    final textStyle = const TextStyle(
       fontSize: 16,
       color: Colors.black,
     );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 25),
-          const _FormWidget(),
-          const SizedBox(height: 25),
-          const Text(
-            'Чтобы пользоваться правкой и возможностями рейтинга TMDB, а также получить персональные'
-            ' рекомендации, необходимо войти в свою учётную запись. Если у вас нет учётной записи, её регистрация '
-            'является бесплатной и простой. ',
+          SizedBox(height: 25),
+          _FormWidget(),
+          SizedBox(height: 25),
+          Text(
+            'In order to use the editing and rating capabilities of TMDb, as well as get personal recommendations you will need to login to your account. If you do not have an account, registering for an account is free and simple.',
             style: textStyle,
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: 5),
           TextButton(
             style: AppButtonStyle.linkButton,
             onPressed: () {},
-            child: const Text('Зарегистрироваться'),
+            child: Text('Register'),
           ),
-          const Text(
-            'Если Вы зарегистрировались, но не получили письмо для подтверждения, нажмите здесь, чтобы '
-            'отправить письмо повторно.',
+          SizedBox(height: 25),
+          Text(
+            'If you signed up but didn`t get your verification email.',
             style: textStyle,
           ),
-          const SizedBox(height: 25),
-          const SizedBox(height: 5),
+          SizedBox(height: 5),
           TextButton(
             style: AppButtonStyle.linkButton,
             onPressed: () {},
@@ -73,16 +69,16 @@ class _HeaderWidgetState extends State<_HeaderWidget> {
 }
 
 class _FormWidget extends StatefulWidget {
-  const _FormWidget({Key? key}) : super(key: key);
+  _FormWidget({Key? key}) : super(key: key);
 
   @override
-  State<_FormWidget> createState() => _FormWidgetState();
+  __FormWidgetState createState() => __FormWidgetState();
 }
 
-class _FormWidgetState extends State<_FormWidget> {
+class __FormWidgetState extends State<_FormWidget> {
   final _loginTextController = TextEditingController();
   final _passwordTextController = TextEditingController();
-  String? errorText = null;
+  String? errorText;
 
   void _auth() {
     final login = _loginTextController.text;
@@ -103,15 +99,18 @@ class _FormWidgetState extends State<_FormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = const TextStyle(
+    final textStyle = const TextStyle(
       fontSize: 16,
       color: Color(0xFF212529),
     );
-    const colorFont = const Color(0xFF01B4E4);
-    const textFieldDecorator = const InputDecoration(
+    final color = const Color(0xFF01B4E4);
+    final textFieldDecorator = const InputDecoration(
       border: OutlineInputBorder(),
       contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       isCollapsed: true,
+      fillColor: Colors.red,
+      focusColor: Colors.red,
+      hoverColor: Colors.red,
     );
     final errorText = this.errorText;
     return Column(
@@ -120,46 +119,58 @@ class _FormWidgetState extends State<_FormWidget> {
         if (errorText != null) ...[
           Text(
             errorText,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 17,
               color: Colors.red,
             ),
           ),
+          SizedBox(height: 20),
         ],
-        const Text(
+        Text(
           'Username',
           style: textStyle,
         ),
-        const SizedBox(height: 5),
-        const TextField(
+        SizedBox(height: 5),
+        TextField(
           controller: _loginTextController,
           decoration: textFieldDecorator,
         ),
-        const SizedBox(height: 20),
-        const Text(
+        SizedBox(height: 20),
+        Text(
           'Password',
           style: textStyle,
         ),
-        const SizedBox(height: 5),
-        const TextField(
+        SizedBox(height: 5),
+        TextField(
           controller: _passwordTextController,
           decoration: textFieldDecorator,
           obscureText: true,
         ),
+        SizedBox(height: 25),
         Row(
           children: [
-            TextButton(
+            ElevatedButton(
               onPressed: _auth,
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(colorFont),
+                backgroundColor: MaterialStateProperty.all(color),
                 foregroundColor: MaterialStateProperty.all(Colors.white),
+                textStyle: MaterialStateProperty.all(
+                  TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                ),
+                padding: MaterialStateProperty.all(
+                  EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 8,
+                  ),
+                ),
               ),
-              child: const Text('Login'),
+              child: Text('Login'),
             ),
+            SizedBox(width: 30),
             TextButton(
-              child: const Text('Reset password'),
               onPressed: _resetPassword,
               style: AppButtonStyle.linkButton,
+              child: Text('Reset password'),
             ),
           ],
         )
