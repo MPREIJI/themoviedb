@@ -44,3 +44,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+web/icons/Icon-maskable-192.png
+web/favicon.png
+web/icons/Icon-512.png
+web/index.html
+web/icons/Icon-192.png
+web/manifest.json
+web/icons/Icon-maskable-512.png
