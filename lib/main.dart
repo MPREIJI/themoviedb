@@ -20,10 +20,19 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => const AuthWidget(),
+        '/auth': (context) => const AuthWidget(),
         '/main_screen': (context) => const MainScreenWidget(),
       },
-      home: const AuthWidget(),
+      initialRoute: '/auth',
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute<void>(builder: (context) {
+          return const Scaffold(
+            body: Center(
+              child: Text('Произошла ошибка навигации'),
+            ),
+          );
+        });
+      },
     );
   }
 }
