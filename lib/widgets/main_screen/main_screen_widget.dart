@@ -8,13 +8,38 @@ class MainScreenWidget extends StatefulWidget {
 }
 
 class _MainScreenWidgetState extends State<MainScreenWidget> {
+  int _selectedTab = 1;
+
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Новости',
+    ),
+    Text(
+      'Фильмы',
+    ),
+    Text(
+      'Сериалы',
+    ),
+  ];
+
+  void onSelectedTab(int index) {
+    if (_selectedTab == index) return;
+    setState(() {
+      _selectedTab = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('TMDB'),
       ),
+      body: Center(
+        child: _widgetOptions[_selectedTab],
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedTab,
         items: [
           const BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -29,6 +54,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
             label: 'Сериалы',
           ),
         ],
+        onTap: onSelectedTab,
       ),
     );
   }

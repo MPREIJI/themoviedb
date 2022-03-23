@@ -97,7 +97,13 @@ class _FormWidgetState extends State<_FormWidget> {
   }
 
   void _resetPassword() {
-    print('reset password');
+    /*String line = "$'reset password'";
+  var toZone = printToZone;
+  if (toZone == null) {
+    printToConsole(line);
+  } else {
+    toZone(line);
+  }*/
   }
 
   @override
