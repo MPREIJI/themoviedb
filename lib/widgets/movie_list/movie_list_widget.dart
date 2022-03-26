@@ -15,7 +15,14 @@ class Movie {
   });
 }
 
-class MovieListWiget extends StatelessWidget {
+class MovieListWiget extends StatefulWidget {
+  MovieListWiget({Key? key}) : super(key: key);
+
+  @override
+  State<MovieListWiget> createState() => _MovieListWigetState();
+}
+
+class _MovieListWigetState extends State<MovieListWiget> {
   final _movies = [
     Movie(
       imageName: AppImages.film,
@@ -68,7 +75,28 @@ class MovieListWiget extends StatelessWidget {
     ),
   ];
 
-  MovieListWiget({Key? key}) : super(key: key);
+  var _filteredMovies = <Movie>[];
+  final _searchController = TextEditingController();
+
+  void _searchMovies() {
+    final query = _searchController.text;
+    if (query.isNotEmpty) {
+      _filteredMovies = _movies.where((Movie movie) {
+        return movie.title.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    } else {
+      _filteredMovies = _movies;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _filteredMovies = _movies;
+    _searchController.addListener(_searchMovies);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +104,11 @@ class MovieListWiget extends StatelessWidget {
       children: [
         ListView.builder(
           padding: const EdgeInsets.only(top: 70),
-          itemCount: _movies.length,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          itemCount: _filteredMovies.length,
           itemExtent: 163,
           itemBuilder: (BuildContext context, int index) {
-            final movie = _movies[index];
+            final movie = _filteredMovies[index];
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Stack(
@@ -151,6 +180,7 @@ class MovieListWiget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: TextField(
+            controller: _searchController,
             decoration: InputDecoration(
               labelText: 'Поиск',
               filled: true,
