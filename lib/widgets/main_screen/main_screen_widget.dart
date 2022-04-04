@@ -15,7 +15,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
     const Text(
       'Новости',
     ),
-    MovieListWiget(),
+    MovieListWidget(),
     const Text(
       'Сериалы',
     ),

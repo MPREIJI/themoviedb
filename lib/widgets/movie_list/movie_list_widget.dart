@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:themoviedb/resources/resources.dart';
 
 class Movie {
+  final int id;
   final String imageName;
   final String title;
   final String time;
   final String description;
 
   Movie({
+    required this.id,
     required this.imageName,
     required this.title,
     required this.time,
@@ -15,9 +17,17 @@ class Movie {
   });
 }
 
-class MovieListWiget extends StatelessWidget {
+class MovieListWidget extends StatefulWidget {
+  MovieListWidget({Key? key}) : super(key: key);
+
+  @override
+  _MovieListWidgetState createState() => _MovieListWidgetState();
+}
+
+class _MovieListWidgetState extends State<MovieListWidget> {
   final _movies = [
     Movie(
+      id: 1,
       imageName: AppImages.film,
       title: 'Острые козырьки',
       time: 'April 7, 2021',
@@ -25,6 +35,7 @@ class MovieListWiget extends StatelessWidget {
           'Британский сериал о криминальном мире Бирмингема 20-х годов прошлого века, в котором многолюдная семья Шелби стала одной из самых жестоких и влиятельных гангстерских банд послевоенного времени. Фирменным',
     ),
     Movie(
+      id: 2,
       imageName: AppImages.film,
       title: 'Бэтмен',
       time: 'April 7, 2021',
@@ -32,6 +43,7 @@ class MovieListWiget extends StatelessWidget {
           'Британский сериал о криминальном мире Бирмингема 20-х годов прошлого века, в котором многолюдная семья Шелби стала одной из самых жестоких и влиятельных гангстерских банд послевоенного времени. Фирменным',
     ),
     Movie(
+      id: 3,
       imageName: AppImages.film,
       title: 'Ходячие мертвецы',
       time: 'April 7, 2021',
@@ -39,6 +51,7 @@ class MovieListWiget extends StatelessWidget {
           'Британский сериал о криминальном мире Бирмингема 20-х годов прошлого века, в котором многолюдная семья Шелби стала одной из самых жестоких и влиятельных гангстерских банд послевоенного времени. Фирменным',
     ),
     Movie(
+      id: 4,
       imageName: AppImages.film,
       title: 'Жажда золота',
       time: 'April 7, 2021',
@@ -46,6 +59,7 @@ class MovieListWiget extends StatelessWidget {
           'Британский сериал о криминальном мире Бирмингема 20-х годов прошлого века, в котором многолюдная семья Шелби стала одной из самых жестоких и влиятельных гангстерских банд послевоенного времени. Фирменным',
     ),
     Movie(
+      id: 5,
       imageName: AppImages.film,
       title: 'Анчартед: На картах не значится',
       time: 'April 7, 2021',
@@ -53,6 +67,7 @@ class MovieListWiget extends StatelessWidget {
           'Британский сериал о криминальном мире Бирмингема 20-х годов прошлого века, в котором многолюдная семья Шелби стала одной из самых жестоких и влиятельных гангстерских банд послевоенного времени. Фирменным',
     ),
     Movie(
+      id: 6,
       imageName: AppImages.film,
       title: 'Затерянный город',
       time: 'April 7, 2021',
@@ -60,6 +75,7 @@ class MovieListWiget extends StatelessWidget {
           'Британский сериал о криминальном мире Бирмингема 20-х годов прошлого века, в котором многолюдная семья Шелби стала одной из самых жестоких и влиятельных гангстерских банд послевоенного времени. Фирменным',
     ),
     Movie(
+      id: 7,
       imageName: AppImages.film,
       title: 'Лулу и Бриггс',
       time: 'April 7, 2021',
@@ -68,7 +84,37 @@ class MovieListWiget extends StatelessWidget {
     ),
   ];
 
-  MovieListWiget({Key? key}) : super(key: key);
+  var _filteredMovies = <Movie>[];
+
+  final _searchController = TextEditingController();
+
+  void _searchMovies() {
+    final query = _searchController.text;
+    if (query.isNotEmpty) {
+      _filteredMovies = _movies.where((Movie movie) {
+        return movie.title.toLowerCase().contains(query.toLowerCase());
+      }).toList();
+    } else {
+      _filteredMovies = _movies;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _filteredMovies = _movies;
+    _searchController.addListener(_searchMovies);
+  }
+
+  void _onMovieTap(int index) {
+    final id = _movies[index].id;
+    Navigator.of(context).pushNamed(
+      '/main_screen/movie_details',
+      arguments: id,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +122,10 @@ class MovieListWiget extends StatelessWidget {
       children: [
         ListView.builder(
           padding: const EdgeInsets.only(top: 70),
-          itemCount: _movies.length,
+          itemCount: _filteredMovies.length,
           itemExtent: 163,
           itemBuilder: (BuildContext context, int index) {
-            final movie = _movies[index];
+            final movie = _filteredMovies[index];
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Stack(
@@ -138,9 +184,7 @@ class MovieListWiget extends StatelessWidget {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(10),
-                      onTap: () {
-                        print('das');
-                      },
+                      onTap: () => _onMovieTap(index),
                     ),
                   ),
                 ],
@@ -151,6 +195,7 @@ class MovieListWiget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: TextField(
+            controller: _searchController,
             decoration: InputDecoration(
               labelText: 'Поиск',
               filled: true,
