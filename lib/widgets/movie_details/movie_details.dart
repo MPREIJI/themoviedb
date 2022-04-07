@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb/widgets/main_screen/main_screen_main_info_widget.dart';
 
 class MovieDetailsWidget extends StatefulWidget {
   final int movieId;
@@ -13,7 +14,12 @@ class _MovieDetailsWidgetState extends State<MovieDetailsWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TMDB'),
+        title: const Text('Film'),
+      ),
+      body: ListView(
+        children: [
+          const MainScreenMainInfoWidget(),
+        ],
       ),
     );
   }
