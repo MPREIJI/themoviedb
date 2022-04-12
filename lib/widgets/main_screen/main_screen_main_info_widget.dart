@@ -115,13 +115,20 @@ class _ScoreWidget extends StatelessWidget {
             onPressed: () {},
             child: Row(
               children: [
-                RadialPercentWidget(
-                  child: const Text('72'),
-                  percent: 72,
-                  fillColor: fillColor,
-                  lineColor: lineColor,
-                  freeColor: freeColor,
-                  lineWidth: lineWidth,
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: RadialPercentWidget(
+                    child: const Text('72'),
+                    percent: 0.72,
+                    fillColor: const Color.fromARGB(255, 10, 23, 25),
+                    lineColor: const Color.fromARGB(255, 37, 203, 103),
+                    freeColor: const Color.fromARGB(255, 25, 54, 31),
+                    lineWidth: 3,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
                 ),
                 const Text('User score'),
               ],
