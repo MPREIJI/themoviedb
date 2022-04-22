@@ -22,7 +22,7 @@ class MovieDetailsMainScreenCastWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 200,
+            height: 300,
             child: Scrollbar(
               child: ListView.builder(
                 itemCount: 20,
@@ -31,14 +31,53 @@ class MovieDetailsMainScreenCastWidget extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        const Image(
-                          image: AssetImage(
-                            AppImages.actor,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border:
+                            Border.all(color: Colors.black.withOpacity(0.2)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        clipBehavior: Clip.hardEdge,
+                        child: Column(
+                          children: [
+                            const Image(image: AssetImage(AppImages.actor)),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Steven Yeung',
+                                    maxLines: 1,
+                                  ),
+                                  const SizedBox(height: 7),
+                                  const Text(
+                                    'Mark Grayson / Invicible (voice)',
+                                    maxLines: 4,
+                                  ),
+                                  const SizedBox(height: 7),
+                                  const Text(
+                                    '8 Episodes',
+                                    maxLines: 1,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   );
                 },
